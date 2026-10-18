@@ -1,0 +1,69 @@
+{
+  "title": "Heat Pump Forecast Optimizer",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Wärmepumpen-Optimierung einrichten",
+        "description": "Verschiebt Heizleistung und Warmwasserbereitung anhand der stündlichen Wettervorhersage in wärmere Stunden. Die automatische Regelung startet aus Sicherheitsgründen AUS.",
+        "data": {
+          "name": "Name",
+          "weather_entity": "Wetter-Entität",
+          "heating_offset_entity": "Heizungs-Offset (Climate)",
+          "dhw_entity": "Warmwassersteuerung",
+          "room_temp_entity": "Raumtemperatur-Sensor (optional)",
+          "day_start": "Beginn Tagesfenster",
+          "day_end": "Ende Tagesfenster",
+          "warm_window_hours": "Dauer optimales Zeitfenster",
+          "forecast_hours": "Prognosehorizont in Stunden",
+          "base_offset": "Basis-Heizungs-Offset",
+          "max_boost_steps": "Maximale Offset-Anhebung",
+          "advantage_medium": "Temperaturvorteil für +1 K",
+          "advantage_strong": "Temperaturvorteil für +2 K",
+          "advantage_max": "Temperaturvorteil für maximalen Boost",
+          "ramp_hours": "Rampenzeit vor/nach dem Zeitfenster",
+          "room_target": "Raum-Solltemperatur",
+          "room_upper_margin": "Obere Raumtemperatur-Grenze",
+          "room_lower_margin": "Untere Raumtemperatur-Grenze",
+          "dhw_normal_target": "Warmwasser Normal-Sollwert",
+          "dhw_reduced_target": "Warmwasser reduzierter Sollwert",
+          "dhw_comfort_min": "Warmwasser Komfort-Untergrenze",
+          "dhw_hygiene_guard": "Warmwasser Hygiene-Schutzgrenze",
+          "restore_on_disable": "Basiswerte beim Ausschalten wiederherstellen"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Wärmepumpen-Optimierung konfigurieren",
+        "description": "Die Integration wird nach dem Speichern neu geladen. Änderungen werden nur geschrieben, wenn 'Automatische Regelung' eingeschaltet ist.",
+        "data": {
+          "name": "Name",
+          "weather_entity": "Wetter-Entität",
+          "heating_offset_entity": "Heizungs-Offset (Climate)",
+          "dhw_entity": "Warmwassersteuerung",
+          "room_temp_entity": "Raumtemperatur-Sensor (optional)",
+          "day_start": "Beginn Tagesfenster",
+          "day_end": "Ende Tagesfenster",
+          "warm_window_hours": "Dauer optimales Zeitfenster",
+          "forecast_hours": "Prognosehorizont in Stunden",
+          "base_offset": "Basis-Heizungs-Offset",
+          "max_boost_steps": "Maximale Offset-Anhebung",
+          "advantage_medium": "Temperaturvorteil für +1 K",
+          "advantage_strong": "Temperaturvorteil für +2 K",
+          "advantage_max": "Temperaturvorteil für maximalen Boost",
+          "ramp_hours": "Rampenzeit vor/nach dem Zeitfenster",
+          "room_target": "Raum-Solltemperatur",
+          "room_upper_margin": "Obere Raumtemperatur-Grenze",
+          "room_lower_margin": "Untere Raumtemperatur-Grenze",
+          "dhw_normal_target": "Warmwasser Normal-Sollwert",
+          "dhw_reduced_target": "Warmwasser reduzierter Sollwert",
+          "dhw_comfort_min": "Warmwasser Komfort-Untergrenze",
+          "dhw_hygiene_guard": "Warmwasser Hygiene-Schutzgrenze",
+          "restore_on_disable": "Basiswerte beim Ausschalten wiederherstellen"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "heatpump_forecast_optimizer",
+  "name": "Heat Pump Forecast Optimizer",
+  "after_dependencies": ["weather"],
+  "codeowners": ["@Maverick3008"],
+  "config_flow": true,
+  "documentation": "https://github.com/Maverick3008/home-assistant-heat-pump-forecast-optimizer",
+  "integration_type": "helper",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/Maverick3008/home-assistant-heat-pump-forecast-optimizer/issues",
+  "version": "0.2.0"
+}

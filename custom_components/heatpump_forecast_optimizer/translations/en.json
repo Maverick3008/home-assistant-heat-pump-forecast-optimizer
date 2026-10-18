@@ -1,0 +1,69 @@
+{
+  "title": "Heat Pump Forecast Optimizer",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up heat pump optimization",
+        "description": "Moves space heating and DHW production into warmer forecast hours. Automatic control starts OFF for safety.",
+        "data": {
+          "name": "Name",
+          "weather_entity": "Weather entity",
+          "heating_offset_entity": "Heating offset climate entity",
+          "dhw_entity": "Domestic hot water entity",
+          "room_temp_entity": "Room temperature sensor (optional)",
+          "day_start": "Day window start",
+          "day_end": "Day window end",
+          "warm_window_hours": "Optimal window duration",
+          "forecast_hours": "Forecast horizon in hours",
+          "base_offset": "Base heating offset",
+          "max_boost_steps": "Maximum offset increase",
+          "advantage_medium": "Temperature advantage for +1 K",
+          "advantage_strong": "Temperature advantage for +2 K",
+          "advantage_max": "Temperature advantage for maximum boost",
+          "ramp_hours": "Ramp time before/after window",
+          "room_target": "Room target temperature",
+          "room_upper_margin": "Upper room temperature margin",
+          "room_lower_margin": "Lower room temperature margin",
+          "dhw_normal_target": "DHW normal target",
+          "dhw_reduced_target": "DHW reduced target",
+          "dhw_comfort_min": "DHW comfort minimum",
+          "dhw_hygiene_guard": "DHW hygiene guard threshold",
+          "restore_on_disable": "Restore baseline targets when disabled"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure heat pump optimization",
+        "description": "The integration reloads after saving. Values are only written while Automatic control is enabled.",
+        "data": {
+          "name": "Name",
+          "weather_entity": "Weather entity",
+          "heating_offset_entity": "Heating offset climate entity",
+          "dhw_entity": "Domestic hot water entity",
+          "room_temp_entity": "Room temperature sensor (optional)",
+          "day_start": "Day window start",
+          "day_end": "Day window end",
+          "warm_window_hours": "Optimal window duration",
+          "forecast_hours": "Forecast horizon in hours",
+          "base_offset": "Base heating offset",
+          "max_boost_steps": "Maximum offset increase",
+          "advantage_medium": "Temperature advantage for +1 K",
+          "advantage_strong": "Temperature advantage for +2 K",
+          "advantage_max": "Temperature advantage for maximum boost",
+          "ramp_hours": "Ramp time before/after window",
+          "room_target": "Room target temperature",
+          "room_upper_margin": "Upper room temperature margin",
+          "room_lower_margin": "Lower room temperature margin",
+          "dhw_normal_target": "DHW normal target",
+          "dhw_reduced_target": "DHW reduced target",
+          "dhw_comfort_min": "DHW comfort minimum",
+          "dhw_hygiene_guard": "DHW hygiene guard threshold",
+          "restore_on_disable": "Restore baseline targets when disabled"
+        }
+      }
+    }
+  }
+}
