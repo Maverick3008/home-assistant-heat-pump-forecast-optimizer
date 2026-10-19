@@ -1,0 +1,44 @@
+# Requires ApexCharts Card from HACS.
+# Adapt the entity ID if Home Assistant generated a different slug.
+type: custom:apexcharts-card
+header:
+  show: true
+  title: Wärmepumpe – Warmwasserplan
+  show_states: true
+graph_span: 36h
+span:
+  start: hour
+now:
+  show: true
+  label: Jetzt
+yaxis:
+  - id: dhw
+    decimals: 0
+    apex_config:
+      title:
+        text: Warmwasser (°C)
+  - id: outdoor
+    opposite: true
+    decimals: 1
+    apex_config:
+      title:
+        text: Außen (°C)
+series:
+  - entity: sensor.warmepumpen_optimierer_warmwasserplan
+    name: Warmwasser Soll
+    yaxis_id: dhw
+    type: line
+    curve: stepline
+    stroke_width: 3
+    data_generator: |
+      const plan = entity.attributes.plan || [];
+      return plan.map(p => [new Date(p.datetime).getTime(), Number(p.temperature)]);
+  - entity: sensor.warmepumpen_optimierer_warmwasserplan
+    name: Außentemperatur
+    yaxis_id: outdoor
+    type: line
+    curve: smooth
+    stroke_width: 2
+    data_generator: |
+      const plan = entity.attributes.plan || [];
+      return plan.map(p => [new Date(p.datetime).getTime(), Number(p.outdoor_temperature)]);

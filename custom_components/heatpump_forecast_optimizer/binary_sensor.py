@@ -30,6 +30,12 @@ BINARY_SENSORS: tuple[OptimizerBinarySensorDescription, ...] = (
         value_fn=lambda data: data.boost_active,
     ),
     OptimizerBinarySensorDescription(
+        key="warm_window_active",
+        name="Optimales Zeitfenster aktiv",
+        icon="mdi:clock-check-outline",
+        value_fn=lambda data: data.warm_window_active,
+    ),
+    OptimizerBinarySensorDescription(
         key="ramp_active",
         name="Temperatur Rampe aktiv",
         icon="mdi:stairs-up",

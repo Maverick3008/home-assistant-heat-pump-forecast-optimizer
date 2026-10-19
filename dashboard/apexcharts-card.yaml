@@ -1,0 +1,101 @@
+# Complete dashboard example for v0.2.1+
+# Requires ApexCharts Card from HACS.
+# Adapt entity IDs if Home Assistant generated different slugs.
+type: vertical-stack
+cards:
+  - type: entities
+    title: Wärmepumpen Optimierer – Planung
+    entities:
+      - entity: sensor.warmepumpen_optimierer_status
+      - entity: sensor.warmepumpen_optimierer_nachste_geplante_anderung
+      - entity: sensor.warmepumpen_optimierer_geplanter_heizungs_offset
+      - entity: sensor.warmepumpen_optimierer_geplante_warmwasser_solltemperatur
+      - entity: binary_sensor.warmepumpen_optimierer_optimales_zeitfenster_aktiv
+      - entity: binary_sensor.warmepumpen_optimierer_forecast_boost_aktiv
+      - entity: sensor.warmepumpen_optimierer_letzter_schreibvorgang
+
+  - type: custom:apexcharts-card
+    header:
+      show: true
+      title: Heizungs-Offset + Außentemperatur
+      show_states: true
+    graph_span: 36h
+    span:
+      start: hour
+    now:
+      show: true
+      label: Jetzt
+    yaxis:
+      - id: offset
+        decimals: 0
+        apex_config:
+          title:
+            text: Offset (K)
+      - id: outdoor
+        opposite: true
+        decimals: 1
+        apex_config:
+          title:
+            text: Außen (°C)
+    series:
+      - entity: sensor.warmepumpen_optimierer_heizplan
+        name: Geplanter Offset
+        yaxis_id: offset
+        type: line
+        curve: stepline
+        stroke_width: 3
+        data_generator: |
+          const plan = entity.attributes.plan || [];
+          return plan.map(p => [new Date(p.datetime).getTime(), Number(p.offset)]);
+      - entity: sensor.warmepumpen_optimierer_heizplan
+        name: Außentemperatur
+        yaxis_id: outdoor
+        type: line
+        curve: smooth
+        stroke_width: 2
+        data_generator: |
+          const plan = entity.attributes.plan || [];
+          return plan.map(p => [new Date(p.datetime).getTime(), Number(p.outdoor_temperature)]);
+
+  - type: custom:apexcharts-card
+    header:
+      show: true
+      title: Warmwasser + Außentemperatur
+      show_states: true
+    graph_span: 36h
+    span:
+      start: hour
+    now:
+      show: true
+      label: Jetzt
+    yaxis:
+      - id: dhw
+        decimals: 0
+        apex_config:
+          title:
+            text: Warmwasser (°C)
+      - id: outdoor
+        opposite: true
+        decimals: 1
+        apex_config:
+          title:
+            text: Außen (°C)
+    series:
+      - entity: sensor.warmepumpen_optimierer_warmwasserplan
+        name: Warmwasser Soll
+        yaxis_id: dhw
+        type: line
+        curve: stepline
+        stroke_width: 3
+        data_generator: |
+          const plan = entity.attributes.plan || [];
+          return plan.map(p => [new Date(p.datetime).getTime(), Number(p.temperature)]);
+      - entity: sensor.warmepumpen_optimierer_warmwasserplan
+        name: Außentemperatur
+        yaxis_id: outdoor
+        type: line
+        curve: smooth
+        stroke_width: 2
+        data_generator: |
+          const plan = entity.attributes.plan || [];
+          return plan.map(p => [new Date(p.datetime).getTime(), Number(p.outdoor_temperature)]);

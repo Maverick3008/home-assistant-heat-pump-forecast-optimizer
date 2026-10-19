@@ -40,12 +40,17 @@ The reduced DHW target delays re-heating; it does not actively cool the tank.
 The integration:
 
 1. Reads an hourly forecast from any Home Assistant `weather.*` entity.
-2. Finds the warmest contiguous daytime block.
-3. Finds the following night minimum.
+2. Finds the best remaining warm block **for each forecast day**.
+3. Finds each block's following night minimum.
 4. Calculates the temperature advantage.
 5. Selects a conservative heating-offset boost.
 6. Optionally checks a room-temperature sensor before pre-heating.
 7. Moves DHW re-heating into the favorable warm window.
+
+For reliable next-day heating decisions, the integration requests at least 48
+hours of forecast context internally even when the visible plan horizon is set
+to 36 hours. A following-night minimum is only used when the forecast reaches
+far enough into that night; otherwise the heating boost stays conservative.
 
 Default boost example:
 
@@ -140,12 +145,76 @@ directly and it provides hourly forecasts without an API key.
 - Planned heating offset
 - DHW current temperature
 - Planned DHW target
+- Heating plan (future points in attributes)
+- DHW plan (future points in attributes)
+- Next planned change
+- Last successful write
+- Last heating offset written
+- Last DHW target written
 
 ### Binary sensors
 - Forecast boost active
+- Optimal window active
 - Temperature ramp active
 - DHW comfort fallback
 - DHW hygiene guard
+
+
+## Future plan curves (v0.2.1+)
+
+The integration now exposes the full configured forecast horizon instead of
+only the target for the current moment.
+
+Two sensors contain future data in their `plan` attribute:
+
+```text
+Heizplan
+Warmwasserplan
+```
+
+A heating-plan item looks like:
+
+```yaml
+- datetime: "2026-10-19T13:00:00+02:00"
+  offset: -3
+  outdoor_temperature: 14.8
+  phase: optimales_zeitfenster
+  boost_steps: 1
+  conditional_room_guard: true
+```
+
+A DHW-plan item looks like:
+
+```yaml
+- datetime: "2026-10-19T13:00:00+02:00"
+  temperature: 50
+  outdoor_temperature: 14.8
+  phase: optimales_zeitfenster
+```
+
+The **heating curve is nominal** because the future room temperature is not
+known. A configured room-temperature guard is checked live when each value is
+actually due. The DHW comfort/hygiene guards are also evaluated live.
+
+The repository includes ready-to-copy ApexCharts examples:
+
+```text
+dashboard/apexcharts-card.yaml
+```
+
+They plot the planned target together with the outdoor-temperature forecast.
+No Home Assistant helper entities are required.
+
+### Diagnostics
+
+v0.2.1 also creates:
+
+- `Nächste geplante Änderung`
+- `Letzter Schreibvorgang`
+- `Zuletzt gesetzter Heizungs-Offset`
+- `Zuletzt gesetzte Warmwasser Solltemperatur`
+
+The last successful write values are persisted across Home Assistant restarts.
 
 ## Status values
 
@@ -156,6 +225,8 @@ deaktiviert
 wartet_auf_zeitfenster
 temperatur_rampe
 optimales_zeitfenster
+optimales_zeitfenster_raum_guard
+optimales_zeitfenster_ohne_heizboost
 basisbetrieb
 warmwasser_komfort
 hygiene_oder_manueller_boost

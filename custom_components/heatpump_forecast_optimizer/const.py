@@ -5,7 +5,7 @@ from typing import Final
 
 DOMAIN: Final = "heatpump_forecast_optimizer"
 NAME: Final = "Heat Pump Forecast Optimizer"
-VERSION: Final = "0.2.0"
+VERSION: Final = "0.2.1"
 
 PLATFORMS: Final = ["sensor", "binary_sensor", "switch"]
 
